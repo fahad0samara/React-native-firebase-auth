@@ -2,31 +2,48 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Alert, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { validateEmail, validatePassword, getErrorText } from '../utils/utils';
+import { styles } from '../styles/styles'; 
 
 const RegisterScreen = ({ navigation }) => {
   const { signUp } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
     setEmailError('');
     setPasswordError('');
+    setConfirmPasswordError('');
 
     if (!validateEmail(email)) {
       setEmailError('Invalid email format');
+      setTimeout(() => setEmailError(''), 3000); 
       return;
     }
 
     if (!validatePassword(password)) {
       setPasswordError('Password must be at least 6 characters long');
+      setTimeout(() => setPasswordError(''), 3000); 
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setConfirmPasswordError('Passwords do not match');
+      setTimeout(() => setConfirmPasswordError(''), 3000); 
       return;
     }
 
     try {
+      setLoading(true);
       await signUp(email, password);
+      setLoading(false);
+      
     } catch (error) {
+      setLoading(false);
       const errorCode = error.code;
       const errorMessage = getErrorText(errorCode);
       Alert.alert('Error', errorMessage);
@@ -55,7 +72,17 @@ const RegisterScreen = ({ navigation }) => {
         secureTextEntry
       />
       {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-      <Button title="Register" onPress={handleRegister} />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirm Password"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry
+      />
+      {confirmPasswordError ? <Text style={styles.errorText}>{confirmPasswordError}</Text> : null}
+      <Button title="Register"
+      color={'#000'} 
+       onPress={handleRegister} disabled={loading} />
       <TouchableOpacity onPress={handleLogin}>
         <Text style={styles.loginText}>Already have an account? Login here</Text>
       </TouchableOpacity>
@@ -63,38 +90,5 @@ const RegisterScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#333',
-  },
-  input: {
-    width: '100%',
-    height: 50,
-    marginBottom: 20,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-  },
-  errorText: {
-    color: 'red',
-    marginBottom: 10,
-  },
-  loginText: {
-    marginTop: 10,
-    color: '#3498db',
-    textDecorationLine: 'underline',
-  },
-});
 
 export default RegisterScreen;

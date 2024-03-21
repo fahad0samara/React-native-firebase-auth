@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Alert, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { validateEmail, validatePassword, getErrorText } from '../utils/utils';
+import { styles } from '../styles/styles'; 
+
 
 const LoginScreen = ({ navigation }) => {
   const { signIn } = useAuth();
@@ -9,29 +11,33 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     setEmailError('');
     setPasswordError('');
-
+    setLoading(true);
     if (!validateEmail(email)) {
       setEmailError('Invalid email format');
+      setTimeout(() => setEmailError(''), 3000); 
+      setLoading(false);
       return;
     }
 
     if (!validatePassword(password)) {
       setPasswordError('Password must be at least 6 characters long');
+      setTimeout(() => setPasswordError(''), 3000); 
+      setLoading(false);
       return;
     }
 
     try {
       await signIn(email, password);
-
-      
     } catch (error) {
       const errorMessage = getErrorText(error.code);
       Alert.alert('Error', errorMessage);
-      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,6 +47,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -56,39 +63,23 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
       />
       {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Login" onPress={handleLogin}
+      color={'#000'}
+
+
+
+       disabled={loading} />
+
       <TouchableOpacity onPress={handleRegister}>
-        <Text style={styles.registerText}>Don't have an account? Register here</Text>
+        <Text style={styles.loginText}>
+          Don't have an account? Register
+        </Text>
       </TouchableOpacity>
+      {loading && <ActivityIndicator size="large" color="#4CAF50" />}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  input: {
-    width: '100%',
-    height: 50,
-    marginBottom: 20,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-  },
-  errorText: {
-    color: 'red',
-    marginBottom: 10,
-  },
-  registerText: {
-    marginTop: 10,
-    color: '#3498db',
-    textDecorationLine: 'underline',
-  },
-});
+
 
 export default LoginScreen;
