@@ -29,11 +29,10 @@ This is a simple authentication app built using React Native and Expo. It allows
 
 ## Screenshots
 
-![Screenshot 1](/screenshots/screenshot1.png)
-*Caption for Screenshot 1*
+| Screenshot 1 | Screenshot 2 | Screenshot 3 |
+| ------------ | ------------ | ------------ |
+| ![Screenshot 1](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/7e86a046-3f2c-482a-842c-568da7372038) | ![Screenshot 2](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/c17351a8-2527-4bed-a1d0-1600461f503e) | ![Screenshot 3](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/54370f06-5790-4476-aca9-27004de333c2) |
 
-![Screenshot 2](/screenshots/screenshot2.png)
-*Caption for Screenshot 2*
 
 ## License
 
