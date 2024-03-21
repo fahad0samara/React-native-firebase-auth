@@ -2,6 +2,13 @@
 # Authentication App
 
 This is a simple authentication app built using React Native and Expo. It allows users to register with an email and password, login to their accounts, and logout. Firebase Authentication is used as the backend service for user authentication.
+## Screenshots
+
+| Screenshot 1 | Screenshot 2 | Screenshot 3 |
+| ------------ | ------------ | ------------ |
+| ![Screenshot 1](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/7e86a046-3f2c-482a-842c-568da7372038) | ![Screenshot 2](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/c17351a8-2527-4bed-a1d0-1600461f503e) | ![Screenshot 3](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/54370f06-5790-4476-aca9-27004de333c2) |
+
+
 
 ## Features
 
@@ -27,11 +34,7 @@ This is a simple authentication app built using React Native and Expo. It allows
 5. Replace the Firebase configuration in the project with your own.
 6. Run the app using `expo start`.
 
-## Screenshots
 
-| Screenshot 1 | Screenshot 2 | Screenshot 3 |
-| ------------ | ------------ | ------------ |
-| ![Screenshot 1](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/7e86a046-3f2c-482a-842c-568da7372038) | ![Screenshot 2](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/c17351a8-2527-4bed-a1d0-1600461f503e) | ![Screenshot 3](https://github.com/fahad0samara/React-native-firebase-auth/assets/90055525/54370f06-5790-4476-aca9-27004de333c2) |
 
 
 ## License
