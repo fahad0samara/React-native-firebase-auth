@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#3498db', 
   },
   authContainer: {
     width: '80%',
@@ -138,10 +138,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 16,
     textAlign: 'center',
+    color: '#333', 
+    fontWeight: 'bold', 
   },
   input: {
     height: 40,
-    borderColor: '#ddd',
+    borderColor: '#ccc', 
     borderWidth: 1,
     marginBottom: 16,
     padding: 8,
@@ -151,8 +153,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   toggleText: {
-    color: '#3498db',
+    color: '#3498db', 
     textAlign: 'center',
+    textDecorationLine: 'underline', 
   },
   bottomContainer: {
     marginTop: 20,
@@ -161,5 +164,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 20,
+    color: '#333',
+    fontWeight: 'bold',
   },
 });
