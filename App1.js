@@ -4,7 +4,7 @@ import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 
 
-
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBv2vc1-RGh6-htKHNRW-Gs65OeEd5B99s",
   authDomain: "addd-b4230.firebaseapp.com",
@@ -14,14 +14,16 @@ const firebaseConfig = {
   appId: "1:104987385269:web:d059ba44e65d90b72e4dfc",
   measurementId: "G-9S6J3EV77B"
 };
-
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+
+// Unauthenticated screen
 const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
   return (
     <View style={styles.authContainer}>
+    
        <Text style={styles.title}>{isLogin ? 'Sign In' : 'Sign Up'}</Text>
-
        <TextInput
         style={styles.input}
         value={email}
@@ -37,6 +39,7 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
         secureTextEntry
       />
       <View style={styles.buttonContainer}>
+        
         <Button title={isLogin ? 'Sign In' : 'Sign Up'} onPress={handleAuthentication} color="#3498db" />
       </View>
 
@@ -50,6 +53,7 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
 }
 
 
+// Authenticated screen
 const AuthenticatedScreen = ({ user, handleAuthentication }) => {
   return (
     <View style={styles.authContainer}>
@@ -60,11 +64,12 @@ const AuthenticatedScreen = ({ user, handleAuthentication }) => {
   );
 };
 export default Biginer = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');// Track email input
+  const [password, setPassword] = useState('');// Track password input
   const [user, setUser] = useState(null); // Track user authentication state
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true);// Track sign-in or sign-up mode
 
+// Get the Auth service for the default app
   const auth = getAuth(app);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -74,7 +79,7 @@ export default Biginer = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  
+  // Handle user authentication
   const handleAuthentication = async () => {
     try {
       if (user) {
@@ -84,7 +89,7 @@ export default Biginer = () => {
       } else {
         // Sign in or sign up
         if (isLogin) {
-          // Sign in
+        // Sign in
           await signInWithEmailAndPassword(auth, email, password);
           console.log('User signed in successfully!');
         } else {
@@ -94,11 +99,13 @@ export default Biginer = () => {
         }
       }
     } catch (error) {
+      // Handle errors
       console.error('Authentication error:', error.message);
     }
   };
 
   return (
+    // Scroll view to handle keyboard
     <ScrollView contentContainerStyle={styles.container}>
       {user ? (
         // Show user's email if user is authenticated
@@ -106,18 +113,19 @@ export default Biginer = () => {
       ) : (
         // Show sign-in or sign-up form if user is not authenticated
         <AuthScreen
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
-          handleAuthentication={handleAuthentication}
+          email={email}// Pass email input
+          setEmail={setEmail}// Pass setEmail function
+          password={password}// Pass password input
+          setPassword={setPassword}// Pass setPassword
+          isLogin={isLogin}// Pass isLogin state
+          setIsLogin={setIsLogin}// Pass setIsLogin function
+          handleAuthentication={handleAuthentication}// Pass handleAuthentication function
         />
       )}
     </ScrollView>
   );
 }
+// Styles
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
